@@ -9,9 +9,7 @@ function dscount(n,s1,s2){
     s2 = s2.toLowerCase();
     for (let i = 1; i < n.length; i++) {
         if ((n[i-1] == s1) && (n[i] == s2)) {z++};
-        //console.log(`${n[i-1]}${n[i]}  ${s1}${s2} ${z}`);
     }
-    //console.log(`line is ${n}, answer is ${z}`);
     return z;
 }
 
