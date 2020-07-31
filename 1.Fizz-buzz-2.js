@@ -14,7 +14,7 @@
 */
 
 function checkSyntax(string){
-	console.log(string);
+	//console.log(string);
 	let br = "<>[]{}()";
 	let someBrPos;
 	let foundBr = [];
