@@ -1,5 +1,5 @@
 // Задача №2
-function myDrawRating(vote){
+function drawRating(vote){
     if (vote == 0) {
         vote = 1;
     }
