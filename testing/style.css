@@ -1,0 +1,6 @@
+#myDataTable td{
+    border: 1px solid black;
+}
+tr:hover{
+    background-color: red;
+}
