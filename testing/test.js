@@ -86,38 +86,40 @@ let requestJSON = new XMLHttpRequest();	// новый экземпляр объекта запроса из ко
 requestJSON.open('GET', requestURL);
 requestJSON.responseType = 'json'; //устанавливаем responseType в JSON, так что XHR знает, что сервер будет возвращать JSON и, что это должно быть преобразовано за кулисами в объект JavaScript
 requestJSON.send();	// Запрос
-let myTable;
+let myTable = document.querySelector("#myDataTable");
+let tableBody;
 let userData = [];
 let tableFields = [`id`, `firstName`, `lastName`, `email`, `phone`]; // используемые поля
+let numOfUsers = 0; // количество записей
+
+
 
 requestJSON.onload = function() {	// при упешном выполнении запроса и загрузке ответа выполняется функция
 	userData = requestJSON.response;
-	console.log(`___________________user data is:`);
-	console.log(userData);
-	// Этап 2. Создание и заполнение таблицы с данными.
-	myTable = document.querySelector("#myDataTable");
-	
+	//console.log(`___________________user data is:`);
+	//console.log(userData);
+	numOfUsers = userData.length;
+	//console.log(numOfPages);
+
+	// Этап 2. Создание и заполнение таблицы с данными.	
 	// шапка таблицы для сортировки
 	let tRow = document.createElement('tr');
 	for (let j = 0; j < tableFields.length; j++) {
 		let th = document.createElement('th');
 		th.innerHTML = tableFields[j];
 		th.setAttribute(`onclick`, `sortTableCol(${j})`); // при клике будет запускаться функция сортировки
-		th.setAttribute(`direction`, `dsc`); // выставление параметра сортировки по убыванию
 		tRow.appendChild(th);
 	}
-	tRow.setAttribute(`id`, `tableCols`)
 	myTable.appendChild(tRow);
 
-	tableFiller(myTable, userData);
+	tableBody = document.createElement('tbody');
+	myTable.appendChild(tableBody);
+	tableFiller(userData, tableBody);
+	makePagination();
 }
 
-
-
-
-function tableFiller(table, tableData){	
-	//document.getElementsByClassName('row').remove();
-
+function tableFiller(tableData, tableRows){	
+	tableRows.innerHTML = "";
 	//добавление полей в строку
 	// id ? | firstName ?| lastName      ? | email          ?| phone 
 	for (let i = 0; i < tableData.length; i++) {
@@ -127,18 +129,19 @@ function tableFiller(table, tableData){
 			tCell.innerHTML = tableData[i][tableFields[j]];
 			tRow.appendChild(tCell);
 		}
-		tRow.setAttribute(`id`, tableData[i][`id`])
-		tRow.setAttribute(`class`, `row`)
-		table.appendChild(tRow);
+		tRow.setAttribute(`id`, tableData[i][`id`]);
+		tableRows.appendChild(tRow);
 	}
-
-	
+	//table.appendChild(tableBody);
 }
+
 // сортировка таблицы
-let tableFieldsSort = [`no`,`no`,`no`,`no`,`no`]; // для определения варианта сортировки. `no` - не сортировано, asc - восх, desc - нисх
+let tableFieldsSort = [`no`,`no`,`no`,`no`,`no`]; // варианты сортировки. `no` - не сортировано, asc - восх, desc - нисх
 function sortTableCol(x){
+	let thFields = document.getElementsByTagName('th');
 	if (tableFieldsSort[x] == `no` || tableFieldsSort[x] == `desc`) {	// определение направления сортировки
 		tableFieldsSort[x] = `asc`; // сортировано по возрастанию
+		thFields[x].innerHTML = `${tableFields[x]} v`;
 		// встроенная сортировка с сравнением соседних строк по заданным полям
 		userData.sort(function (a, b) {	
 			if (a[tableFields[x]] > b[tableFields[x]]) {return 1;}
@@ -146,6 +149,7 @@ function sortTableCol(x){
 			return 0;					
 		});
 	}else{
+		thFields[x].innerHTML = `${tableFields[x]} ^`;
 		tableFieldsSort[x] = `desc`; // сортировано по убыванию
 		userData.sort(function (a, b) {	
 			if (a[tableFields[x]] < b[tableFields[x]]) {return 1;}
@@ -154,54 +158,18 @@ function sortTableCol(x){
 		});
 	}
 	console.log(`sorted by ${tableFields[x]} (${tableFieldsSort[x]})`);
-	tableFiller(myTable, userData);
+	tableFiller(userData, tableBody);
 }
 
-
-/*	для мелких таблиц - ок
-function sortTableCol(x){
-		//console.log(`x is  ${x}`);
-		// источник https://html5css.ru/howto/howto_js_sort_table.php
-		let table = document.getElementById('myDataTable');
-		let direction = `asc`; // направление сортировки
-		let switching = true; // были ли смены мест
-		let needToSwitch;	// необходимости смены мест для строки
-		let firstRow, secondRow; // строки на сравнение
-		let switchCount = 0; // количество смен
-		let A;
-		let tRowsж
-		while(switching){
-			switching = false;	// смен мест не было
-			tRows = table.getElementsByTagName('tr');	// сбор всех строк в таблице
-			for (let i = 1; i < (tRows.length -1); i++) {
-				needToSwitch = false;
-				firstRow = (tRows[i].getElementsByTagName('td'))[x];	// две соседние строки
-				secondRow = (tRows[i + 1].getElementsByTagName('td'))[x];
-				if(direction == `asc`){
-					if(firstRow.innerHTML.toLowerCase() > secondRow.innerHTML.toLowerCase()){ // если строки не по возрастанию - надо менять местами
-						needToSwitch = true;
-						A = i;
-						break;
-					}
-				}else if(direction = `desc`){
-					if(firstRow.innerHTML.toLowerCase() < secondRow.innerHTML.toLowerCase()){ // если строки не по убыванию - надо менять местами
-						needToSwitch = true;
-						A = i;
-						break;
-					}
-				}
-			}
-			if (needToSwitch) { // если надо менять местами
-				tRows[A].parentNode.insertBefore(tRows[A + 1], tRows[A]);
-				switching = true;	// была смена мест
-				switchCount++;
-			}else{
-				if (switchCount == 0 && direction == `asc`){ // если смен не было и направление восходящее -> меняем
-					direction = `desc`;
-					switching = true;
-				}
-			}
-		}
-		
+// пагинация на странице
+function makePagination(){
+	let rowPerPage = 50; // строк на странице
+	let numOfPages = Math.ceil(numOfUsers / rowPerPage); // количество страниц с данными
+	let paginator = document.querySelector("#pagination");
+	let page = "";
+	for (let i = 0; i < numOfPages; i++) {
+		page += `hello there`;
+	  //page += "<span data-page=" + i * cnt + "  id=\"page" + (i + 1) + "\">" + (i + 1) + "</span>";
+	}
+	paginator.innerHTML = page;
 }
-*/
