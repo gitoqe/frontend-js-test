@@ -40,7 +40,7 @@
  	1. Особое внимание следует уделить скорости работы. Зависание интерфейса при выполнении операций загрузки данных, фильтрации, сортировки недопустимо.
 	2. Во время загрузки данных стоит показать какой-то индикатор
 	3. Разрешённые библиотеки: jQuery, Lodash/Underscore, Backbone, самописный. Но вам придется объяснить выбор и причину использования. Использование сторонних библиотек будет плюсом только в случае если это оправданно и вы сможете объяснить причину выбора. Показав свои знания в грамотном применении сторонних готовых решений, вы имеете шанс повысить свою профессиональную привлекательность для нас.
-	4. Пишите код так, как бы вы его писали в работе - внутренности задания будут оцениваться даже тщательней, чем внешнее соответствие заданию. Код 5.должен быть организован так, чтобы его можно было заново использовать.
+	4. Пишите код так, как бы вы его писали в работе - внутренности задания будут оцениваться даже тщательней, чем внешнее соответствие заданию. Код должен быть организован так, чтобы его можно было заново использовать.
 	5. Помните про обработку ошибок!
 	6. Верстка может быть самая простая. Визуализацию и украшение делаете на ваш вкус. Мы не против использования http://getbootstrap.com/ или похожего UI фреймворк, но только для UI представления (нельзя использовать JS код для решения задачи, но можно использовать для оформительских эффектов(анимации и тому подобное))!
 Дополнительным плюсом будет:
@@ -81,37 +81,42 @@
 // Этап 1. Получение данных "от сервера"
 
 let requestURL = "http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&adress={addressObject}&description={lorem|32}";
+//let requestURL = "http://www.filltext.com/?rows=1000&id={number|1000}&firstName={firstName}&delay=3&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&adress={addressObject}&description={lorem|32}";
 let requestJSON = new XMLHttpRequest();	// новый экземпляр объекта запроса из конструктора XMLHttpRequest
 requestJSON.open('GET', requestURL);
 requestJSON.responseType = 'json'; //устанавливаем responseType в JSON, так что XHR знает, что сервер будет возвращать JSON и, что это должно быть преобразовано за кулисами в объект JavaScript
 requestJSON.send();	// Запрос
+let myTable;
+let userData = [];
+let tableFields = [`id`, `firstName`, `lastName`, `email`, `phone`]; // используемые поля
+
 requestJSON.onload = function() {	// при упешном выполнении запроса и загрузке ответа выполняется функция
-	//let requestAnswer = requestJSON.response;	// заполнение переменной
-	let userData = [];
 	userData = requestJSON.response;
-	/*console.log(userData);
-	console.log(typeof(userData));
-	console.log(userData[0]);*/
 	console.log(`___________________user data is:`);
 	console.log(userData);
 	// Этап 2. Создание и заполнение таблицы с данными.
-	var myTable = document.querySelector("#myDataTable");
-	tableFiller(myTable, userData);
-}
-
-
-function tableFiller(table, tableData){
-	let tableFields = [`id`, `firstName`, `lastName`, `email`, `phone`]; // используемые поля
+	myTable = document.querySelector("#myDataTable");
+	
 	// шапка таблицы для сортировки
 	let tRow = document.createElement('tr');
 	for (let j = 0; j < tableFields.length; j++) {
 		let th = document.createElement('th');
 		th.innerHTML = tableFields[j];
 		th.setAttribute(`onclick`, `sortTableCol(${j})`); // при клике будет запускаться функция сортировки
+		th.setAttribute(`direction`, `dsc`); // выставление параметра сортировки по убыванию
 		tRow.appendChild(th);
 	}
 	tRow.setAttribute(`id`, `tableCols`)
-	table.appendChild(tRow);
+	myTable.appendChild(tRow);
+
+	tableFiller(myTable, userData);
+}
+
+
+
+
+function tableFiller(table, tableData){	
+	//document.getElementsByClassName('row').remove();
 
 	//добавление полей в строку
 	// id ? | firstName ?| lastName      ? | email          ?| phone 
@@ -123,15 +128,39 @@ function tableFiller(table, tableData){
 			tRow.appendChild(tCell);
 		}
 		tRow.setAttribute(`id`, tableData[i][`id`])
+		tRow.setAttribute(`class`, `row`)
 		table.appendChild(tRow);
 	}
 
-	// сортировка таблицы
+	
+}
+// сортировка таблицы
+let tableFieldsSort = [`no`,`no`,`no`,`no`,`no`]; // для определения варианта сортировки. `no` - не сортировано, asc - восх, desc - нисх
+function sortTableCol(x){
+	if (tableFieldsSort[x] == `no` || tableFieldsSort[x] == `desc`) {	// определение направления сортировки
+		tableFieldsSort[x] = `asc`; // сортировано по возрастанию
+		// встроенная сортировка с сравнением соседних строк по заданным полям
+		userData.sort(function (a, b) {	
+			if (a[tableFields[x]] > b[tableFields[x]]) {return 1;}
+			if (a[tableFields[x]] < b[tableFields[x]]) {return -1;}
+			return 0;					
+		});
+	}else{
+		tableFieldsSort[x] = `desc`; // сортировано по убыванию
+		userData.sort(function (a, b) {	
+			if (a[tableFields[x]] < b[tableFields[x]]) {return 1;}
+			if (a[tableFields[x]] > b[tableFields[x]]) {return -1;}
+			return 0;					
+		});
+	}
+	console.log(`sorted by ${tableFields[x]} (${tableFieldsSort[x]})`);
+	tableFiller(myTable, userData);
 }
 
 
+/*	для мелких таблиц - ок
 function sortTableCol(x){
-		console.log(`x is  ${x}`);
+		//console.log(`x is  ${x}`);
 		// источник https://html5css.ru/howto/howto_js_sort_table.php
 		let table = document.getElementById('myDataTable');
 		let direction = `asc`; // направление сортировки
@@ -175,3 +204,4 @@ function sortTableCol(x){
 		}
 		
 }
+*/
