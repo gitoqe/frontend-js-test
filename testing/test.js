@@ -132,7 +132,7 @@ function tableFiller(tableData, tableRows){
 			tCell.setAttribute(`onclick`, `tdClick(${tableData[i].id})`);
 			tRow.appendChild(tCell);
 		}
-		tRow.setAttribute(`id`, tableData[i][`id`]);	// добавляем id с номером пользователя
+		tRow.setAttribute(`id`, `n${tableData[i][`id`]}`);	// добавляем id с номером пользователя
 		tRow.setAttribute(`class`, `tableRow`);	// добавляем обозначение
 		tRow.style.display = "none";	// прячем строчку
 		tableRows.appendChild(tRow);
@@ -195,6 +195,9 @@ function makePagination(){
 	activePage = document.getElementById("page1");
 	activePage.classList.add("paginator_active");
 }
+
+
+
 // переходы внутри страниц	  
 function pagination(event) {
 	let e = event || window.event;	// действие
@@ -241,39 +244,13 @@ function tdClick(x){
 let filtration = document.querySelector('#inputFind');
 let btnFind = document.querySelector('#btnFind');
 btnFind.onclick = function(){
-	console.log(filtration.value);
-	//let targetUser = userData.find(user => user.includes(filtration.value));
-	//console.log(targetUser);
 	for (let i = 0; i < userData.length; i++) {
-		console.log(userData[i]);
-		for (key in userData[i]) {
-			//console.log(key)
-			//console.log(userData[i][key])
-			let toStringer = userData[i][key].stringify();
-			console.log(toStringer);
-			//console.log(toString(userData[i][key]))
-			//.find(filtration.value))
-			//let gogog = userData[i][key].find(filtration.value);
-			//console.log(gogog);
-
-			//find(user => user.includes(filtration.value))
-			//console.log(key)
-
+		let stringedData = (JSON.stringify(userData[i])).toLowerCase();	// преобразование объекта из базы в строку
+		if (stringedData.indexOf((filtration.value).toLowerCase()) >= 0) { // поиск подстроки
+			//console.log(stringedData);
+			document.querySelector(`#n${userData[i].id}`).style.display = "table-row";
+		}else{
+			document.querySelector(`#n${userData[i].id}`).style.display = "none";
 		}
 	}
-
-	/*
-	
-		let j = 0;
-	for (let i = 0; i < rowsToShow.length; i++) {	// по количеству выводимых строк
-	  let data_num = rowsToShow[i].dataset.tableRow;	
-	  rowsToShow[i].style.display = "none";
-	}
-	for (let i = pageRowStart; i < rowsToShow.length; i++) {
-	  if (j >= rowPerPage) break;
-	  rowsToShow[i].style.display = "table-row";
-	  j++;
-	}
-
-	*/
 }
