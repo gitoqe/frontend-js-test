@@ -1,6 +1,29 @@
 #myDataTable td{
     border: 1px solid black;
 }
-tr:hover{
+.tableRow:hover{
     background-color: red;
+}
+span:hover{
+    color: green;
+    cursor: pointer;
+    font-weight: bold;
+}
+.paginator_active {
+    color: red;
+    
+}
+.infoZone{
+    display: block;
+    border: 1px solid black;
+    width: max-content;
+    padding: 5px;
+    margin: 10px 0px 10px 0px;
+}
+textarea{
+    min-width: 500px;
+    min-height: 60px;
+}
+#infoBlockPart{
+    padding: 5px;
 }

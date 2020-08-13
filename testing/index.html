@@ -5,10 +5,28 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <table id="myDataTable">
-        <tr class="row"></tr>
-    </table>
-    <div id="pagination">PAGINATION IS HERE</div>
+    <div class="infoZone">
+        <input id="inputFind" type="text">
+        <button id="btnFind">Найти</button>
+    </div>
+    
+    <table id="myDataTable"></table>
+
+    <div class="infoZone">
+        Переход по страницам:<br>
+        <div id="pagination" onclick="pagination(event)">PAGINATION IS HERE</div>
+    </div>
+
+    <div class="infoZone">Подробная информация о выбранном пользователе:
+        <div class="infoBlock">
+            Выбран пользователь:<br> 
+            Описание:<br>
+            Адрес проживания:<br>
+            Город:<br>
+            Провинция/штат:<br>
+            Индекс:<br>
+        </div>
+    </div>
     <script src="test.js"></script>
 </body>
 </html>

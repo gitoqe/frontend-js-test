@@ -1,19 +1,19 @@
-/*		Задача №2
-Необходимо разработать javascript-компонент для сортировки таблиц с данными.
+/*		Р—Р°РґР°С‡Р° в„–2
+РќРµРѕР±С…РѕРґРёРјРѕ СЂР°Р·СЂР°Р±РѕС‚Р°С‚СЊ javascript-РєРѕРјРїРѕРЅРµРЅС‚ РґР»СЏ СЃРѕСЂС‚РёСЂРѕРІРєРё С‚Р°Р±Р»РёС† СЃ РґР°РЅРЅС‹РјРё.
 
-Функционал
+Р¤СѓРЅРєС†РёРѕРЅР°Р»
 
-	1. Сортировка по столбцам: при нажатии на название столбца строки таблицы сортируются по возрастанию, при повторном клике - по убыванию. Графическим элементом или текстовым сообщением указывается направление сортировки.
-	2. Клиентская пагинация: данные необходимо отображать постранично, максимум 50 элементов на страницу. Необходимо предоставить пользовательскую навигацию для перехода по страницам.
-	3. Фильтрация: компонент предоставляет текстовое поле, в которое пользователь может ввести текст и строки таблицы, данные которых не содержат подстроку, введённую пользователем, скрываются. Перефильтрация осуществляется по нажатию на кнопку Найти.
-	4. По клике на строку таблицы значения полей выводятся в дополнительном блоке под таблицей.
-	5. Данные в таблицу загружаются с сервера. Способ загрузки с сервера на ваш выбор.
+	1. РЎРѕСЂС‚РёСЂРѕРІРєР° РїРѕ СЃС‚РѕР»Р±С†Р°Рј: РїСЂРё РЅР°Р¶Р°С‚РёРё РЅР° РЅР°Р·РІР°РЅРёРµ СЃС‚РѕР»Р±С†Р° СЃС‚СЂРѕРєРё С‚Р°Р±Р»РёС†С‹ СЃРѕСЂС‚РёСЂСѓСЋС‚СЃСЏ РїРѕ РІРѕР·СЂР°СЃС‚Р°РЅРёСЋ, РїСЂРё РїРѕРІС‚РѕСЂРЅРѕРј РєР»РёРєРµ - РїРѕ СѓР±С‹РІР°РЅРёСЋ. Р“СЂР°С„РёС‡РµСЃРєРёРј СЌР»РµРјРµРЅС‚РѕРј РёР»Рё С‚РµРєСЃС‚РѕРІС‹Рј СЃРѕРѕР±С‰РµРЅРёРµРј СѓРєР°Р·С‹РІР°РµС‚СЃСЏ РЅР°РїСЂР°РІР»РµРЅРёРµ СЃРѕСЂС‚РёСЂРѕРІРєРё.
+	2. РљР»РёРµРЅС‚СЃРєР°СЏ РїР°РіРёРЅР°С†РёСЏ: РґР°РЅРЅС‹Рµ РЅРµРѕР±С…РѕРґРёРјРѕ РѕС‚РѕР±СЂР°Р¶Р°С‚СЊ РїРѕСЃС‚СЂР°РЅРёС‡РЅРѕ, РјР°РєСЃРёРјСѓРј 50 СЌР»РµРјРµРЅС‚РѕРІ РЅР° СЃС‚СЂР°РЅРёС†Сѓ. РќРµРѕР±С…РѕРґРёРјРѕ РїСЂРµРґРѕСЃС‚Р°РІРёС‚СЊ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєСѓСЋ РЅР°РІРёРіР°С†РёСЋ РґР»СЏ РїРµСЂРµС…РѕРґР° РїРѕ СЃС‚СЂР°РЅРёС†Р°Рј.
+	3. Р¤РёР»СЊС‚СЂР°С†РёСЏ: РєРѕРјРїРѕРЅРµРЅС‚ РїСЂРµРґРѕСЃС‚Р°РІР»СЏРµС‚ С‚РµРєСЃС‚РѕРІРѕРµ РїРѕР»Рµ, РІ РєРѕС‚РѕСЂРѕРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РјРѕР¶РµС‚ РІРІРµСЃС‚Рё С‚РµРєСЃС‚ Рё СЃС‚СЂРѕРєРё С‚Р°Р±Р»РёС†С‹, РґР°РЅРЅС‹Рµ РєРѕС‚РѕСЂС‹С… РЅРµ СЃРѕРґРµСЂР¶Р°С‚ РїРѕРґСЃС‚СЂРѕРєСѓ, РІРІРµРґС‘РЅРЅСѓСЋ РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј, СЃРєСЂС‹РІР°СЋС‚СЃСЏ. РџРµСЂРµС„РёР»СЊС‚СЂР°С†РёСЏ РѕСЃСѓС‰РµСЃС‚РІР»СЏРµС‚СЃСЏ РїРѕ РЅР°Р¶Р°С‚РёСЋ РЅР° РєРЅРѕРїРєСѓ РќР°Р№С‚Рё.
+	4. РџРѕ РєР»РёРєРµ РЅР° СЃС‚СЂРѕРєСѓ С‚Р°Р±Р»РёС†С‹ Р·РЅР°С‡РµРЅРёСЏ РїРѕР»РµР№ РІС‹РІРѕРґСЏС‚СЃСЏ РІ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕРј Р±Р»РѕРєРµ РїРѕРґ С‚Р°Р±Р»РёС†РµР№.
+	5. Р”Р°РЅРЅС‹Рµ РІ С‚Р°Р±Р»РёС†Сѓ Р·Р°РіСЂСѓР¶Р°СЋС‚СЃСЏ СЃ СЃРµСЂРІРµСЂР°. РЎРїРѕСЃРѕР± Р·Р°РіСЂСѓР·РєРё СЃ СЃРµСЂРІРµСЂР° РЅР° РІР°С€ РІС‹Р±РѕСЂ.
 
-	Для демонстрации работы компонента необходимо сделать простую HTML страницу. Пользователю предлагается выбрать набор данных: маленький или большой. При выборе набора данных он загружается с сервера и по данным строится таблица.
+	Р”Р»СЏ РґРµРјРѕРЅСЃС‚СЂР°С†РёРё СЂР°Р±РѕС‚С‹ РєРѕРјРїРѕРЅРµРЅС‚Р° РЅРµРѕР±С…РѕРґРёРјРѕ СЃРґРµР»Р°С‚СЊ РїСЂРѕСЃС‚СѓСЋ HTML СЃС‚СЂР°РЅРёС†Сѓ. РџРѕР»СЊР·РѕРІР°С‚РµР»СЋ РїСЂРµРґР»Р°РіР°РµС‚СЃСЏ РІС‹Р±СЂР°С‚СЊ РЅР°Р±РѕСЂ РґР°РЅРЅС‹С…: РјР°Р»РµРЅСЊРєРёР№ РёР»Рё Р±РѕР»СЊС€РѕР№. РџСЂРё РІС‹Р±РѕСЂРµ РЅР°Р±РѕСЂР° РґР°РЅРЅС‹С… РѕРЅ Р·Р°РіСЂСѓР¶Р°РµС‚СЃСЏ СЃ СЃРµСЂРІРµСЂР° Рё РїРѕ РґР°РЅРЅС‹Рј СЃС‚СЂРѕРёС‚СЃСЏ С‚Р°Р±Р»РёС†Р°.
 
-Формат данных от сервера
+Р¤РѕСЂРјР°С‚ РґР°РЅРЅС‹С… РѕС‚ СЃРµСЂРІРµСЂР°
 
-Сервер возвращает JSON-массив данных. Пример данных:
+РЎРµСЂРІРµСЂ РІРѕР·РІСЂР°С‰Р°РµС‚ JSON-РјР°СЃСЃРёРІ РґР°РЅРЅС‹С…. РџСЂРёРјРµСЂ РґР°РЅРЅС‹С…:
 
 [
 	{
@@ -31,22 +31,22 @@
 		description: "et lacus magna dolor..."
 	}
 }
-Маленький объем данных берется по ссылке http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&adress={addressObject}&description={lorem|32}
+РњР°Р»РµРЅСЊРєРёР№ РѕР±СЉРµРј РґР°РЅРЅС‹С… Р±РµСЂРµС‚СЃСЏ РїРѕ СЃСЃС‹Р»РєРµ http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&adress={addressObject}&description={lorem|32}
 
-Большой объем данных берется по ссылке http://www.filltext.com/?rows=1000&id={number|1000}&firstName={firstName}&delay=3&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&adress={addressObject}&description={lorem|32}
+Р‘РѕР»СЊС€РѕР№ РѕР±СЉРµРј РґР°РЅРЅС‹С… Р±РµСЂРµС‚СЃСЏ РїРѕ СЃСЃС‹Р»РєРµ http://www.filltext.com/?rows=1000&id={number|1000}&firstName={firstName}&delay=3&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&adress={addressObject}&description={lorem|32}
 
-Замечания
+Р—Р°РјРµС‡Р°РЅРёСЏ
 
- 	1. Особое внимание следует уделить скорости работы. Зависание интерфейса при выполнении операций загрузки данных, фильтрации, сортировки недопустимо.
-	2. Во время загрузки данных стоит показать какой-то индикатор
-	3. Разрешённые библиотеки: jQuery, Lodash/Underscore, Backbone, самописный. Но вам придется объяснить выбор и причину использования. Использование сторонних библиотек будет плюсом только в случае если это оправданно и вы сможете объяснить причину выбора. Показав свои знания в грамотном применении сторонних готовых решений, вы имеете шанс повысить свою профессиональную привлекательность для нас.
-	4. Пишите код так, как бы вы его писали в работе - внутренности задания будут оцениваться даже тщательней, чем внешнее соответствие заданию. Код должен быть организован так, чтобы его можно было заново использовать.
-	5. Помните про обработку ошибок!
-	6. Верстка может быть самая простая. Визуализацию и украшение делаете на ваш вкус. Мы не против использования http://getbootstrap.com/ или похожего UI фреймворк, но только для UI представления (нельзя использовать JS код для решения задачи, но можно использовать для оформительских эффектов(анимации и тому подобное))!
-Дополнительным плюсом будет:
+ 	1. РћСЃРѕР±РѕРµ РІРЅРёРјР°РЅРёРµ СЃР»РµРґСѓРµС‚ СѓРґРµР»РёС‚СЊ СЃРєРѕСЂРѕСЃС‚Рё СЂР°Р±РѕС‚С‹. Р—Р°РІРёСЃР°РЅРёРµ РёРЅС‚РµСЂС„РµР№СЃР° РїСЂРё РІС‹РїРѕР»РЅРµРЅРёРё РѕРїРµСЂР°С†РёР№ Р·Р°РіСЂСѓР·РєРё РґР°РЅРЅС‹С…, С„РёР»СЊС‚СЂР°С†РёРё, СЃРѕСЂС‚РёСЂРѕРІРєРё РЅРµРґРѕРїСѓСЃС‚РёРјРѕ.
+	2. Р’Рѕ РІСЂРµРјСЏ Р·Р°РіСЂСѓР·РєРё РґР°РЅРЅС‹С… СЃС‚РѕРёС‚ РїРѕРєР°Р·Р°С‚СЊ РєР°РєРѕР№-С‚Рѕ РёРЅРґРёРєР°С‚РѕСЂ
+	3. Р Р°Р·СЂРµС€С‘РЅРЅС‹Рµ Р±РёР±Р»РёРѕС‚РµРєРё: jQuery, Lodash/Underscore, Backbone, СЃР°РјРѕРїРёСЃРЅС‹Р№. РќРѕ РІР°Рј РїСЂРёРґРµС‚СЃСЏ РѕР±СЉСЏСЃРЅРёС‚СЊ РІС‹Р±РѕСЂ Рё РїСЂРёС‡РёРЅСѓ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ. РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ СЃС‚РѕСЂРѕРЅРЅРёС… Р±РёР±Р»РёРѕС‚РµРє Р±СѓРґРµС‚ РїР»СЋСЃРѕРј С‚РѕР»СЊРєРѕ РІ СЃР»СѓС‡Р°Рµ РµСЃР»Рё СЌС‚Рѕ РѕРїСЂР°РІРґР°РЅРЅРѕ Рё РІС‹ СЃРјРѕР¶РµС‚Рµ РѕР±СЉСЏСЃРЅРёС‚СЊ РїСЂРёС‡РёРЅСѓ РІС‹Р±РѕСЂР°. РџРѕРєР°Р·Р°РІ СЃРІРѕРё Р·РЅР°РЅРёСЏ РІ РіСЂР°РјРѕС‚РЅРѕРј РїСЂРёРјРµРЅРµРЅРёРё СЃС‚РѕСЂРѕРЅРЅРёС… РіРѕС‚РѕРІС‹С… СЂРµС€РµРЅРёР№, РІС‹ РёРјРµРµС‚Рµ С€Р°РЅСЃ РїРѕРІС‹СЃРёС‚СЊ СЃРІРѕСЋ РїСЂРѕС„РµСЃСЃРёРѕРЅР°Р»СЊРЅСѓСЋ РїСЂРёРІР»РµРєР°С‚РµР»СЊРЅРѕСЃС‚СЊ РґР»СЏ РЅР°СЃ.
+	4. РџРёС€РёС‚Рµ РєРѕРґ С‚Р°Рє, РєР°Рє Р±С‹ РІС‹ РµРіРѕ РїРёСЃР°Р»Рё РІ СЂР°Р±РѕС‚Рµ - РІРЅСѓС‚СЂРµРЅРЅРѕСЃС‚Рё Р·Р°РґР°РЅРёСЏ Р±СѓРґСѓС‚ РѕС†РµРЅРёРІР°С‚СЊСЃСЏ РґР°Р¶Рµ С‚С‰Р°С‚РµР»СЊРЅРµР№, С‡РµРј РІРЅРµС€РЅРµРµ СЃРѕРѕС‚РІРµС‚СЃС‚РІРёРµ Р·Р°РґР°РЅРёСЋ. РљРѕРґ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РѕСЂРіР°РЅРёР·РѕРІР°РЅ С‚Р°Рє, С‡С‚РѕР±С‹ РµРіРѕ РјРѕР¶РЅРѕ Р±С‹Р»Рѕ Р·Р°РЅРѕРІРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ.
+	5. РџРѕРјРЅРёС‚Рµ РїСЂРѕ РѕР±СЂР°Р±РѕС‚РєСѓ РѕС€РёР±РѕРє!
+	6. Р’РµСЂСЃС‚РєР° РјРѕР¶РµС‚ Р±С‹С‚СЊ СЃР°РјР°СЏ РїСЂРѕСЃС‚Р°СЏ. Р’РёР·СѓР°Р»РёР·Р°С†РёСЋ Рё СѓРєСЂР°С€РµРЅРёРµ РґРµР»Р°РµС‚Рµ РЅР° РІР°С€ РІРєСѓСЃ. РњС‹ РЅРµ РїСЂРѕС‚РёРІ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ http://getbootstrap.com/ РёР»Рё РїРѕС…РѕР¶РµРіРѕ UI С„СЂРµР№РјРІРѕСЂРє, РЅРѕ С‚РѕР»СЊРєРѕ РґР»СЏ UI РїСЂРµРґСЃС‚Р°РІР»РµРЅРёСЏ (РЅРµР»СЊР·СЏ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ JS РєРѕРґ РґР»СЏ СЂРµС€РµРЅРёСЏ Р·Р°РґР°С‡Рё, РЅРѕ РјРѕР¶РЅРѕ РёСЃРїРѕР»СЊР·РѕРІР°С‚СЊ РґР»СЏ РѕС„РѕСЂРјРёС‚РµР»СЊСЃРєРёС… СЌС„С„РµРєС‚РѕРІ(Р°РЅРёРјР°С†РёРё Рё С‚РѕРјСѓ РїРѕРґРѕР±РЅРѕРµ))!
+Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Рј РїР»СЋСЃРѕРј Р±СѓРґРµС‚:
 
-Использование TypeScript или ES6+(babel).
-Схема визуального представления данных
+РСЃРїРѕР»СЊР·РѕРІР°РЅРёРµ TypeScript РёР»Рё ES6+(babel).
+РЎС…РµРјР° РІРёР·СѓР°Р»СЊРЅРѕРіРѕ РїСЂРµРґСЃС‚Р°РІР»РµРЅРёСЏ РґР°РЅРЅС‹С…
 
 	+------+------------+-----------------+-----------------+---------------+
 	| id ? | firstName ?| lastName      ? | email          ?| phone        ?|
@@ -58,91 +58,96 @@
 	| 103  | Ips        | Umdolo          | dwhalley@in.gov | (612)211-6296 |
 	+------+------------+-----------------+-----------------+---------------+
 
-	Если выбран пользователем с id = 101 , то под таблицей выводим следующую информацию:
+	Р•СЃР»Рё РІС‹Р±СЂР°РЅ РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј СЃ id = 101 , С‚Рѕ РїРѕРґ С‚Р°Р±Р»РёС†РµР№ РІС‹РІРѕРґРёРј СЃР»РµРґСѓСЋС‰СѓСЋ РёРЅС„РѕСЂРјР°С†РёСЋ:
 
-	Выбран пользователь <b>Sue Corson</b>
-	Описание:
+	Р’С‹Р±СЂР°РЅ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ <b>Sue Corson</b>
+	РћРїРёСЃР°РЅРёРµ:
 	<textarea>
 	et lacus magna dolor...
 	</textarea>
-	Адрес проживания: <b>9792 Mattis Ct</b>
-	Город: <b>Waukesha</b>
-	Провинция/штат: <b>WI</b>
-	Индекс: <b>22178</b>
-	Дополнительно напишите нам, как вы тестировали результат своей работы. Какие используете инструменты и как вы осуществляете тестирование.
+	РђРґСЂРµСЃ РїСЂРѕР¶РёРІР°РЅРёСЏ: <b>9792 Mattis Ct</b>
+	Р“РѕСЂРѕРґ: <b>Waukesha</b>
+	РџСЂРѕРІРёРЅС†РёСЏ/С€С‚Р°С‚: <b>WI</b>
+	РРЅРґРµРєСЃ: <b>22178</b>
+	Р”РѕРїРѕР»РЅРёС‚РµР»СЊРЅРѕ РЅР°РїРёС€РёС‚Рµ РЅР°Рј, РєР°Рє РІС‹ С‚РµСЃС‚РёСЂРѕРІР°Р»Рё СЂРµР·СѓР»СЊС‚Р°С‚ СЃРІРѕРµР№ СЂР°Р±РѕС‚С‹. РљР°РєРёРµ РёСЃРїРѕР»СЊР·СѓРµС‚Рµ РёРЅСЃС‚СЂСѓРјРµРЅС‚С‹ Рё РєР°Рє РІС‹ РѕСЃСѓС‰РµСЃС‚РІР»СЏРµС‚Рµ С‚РµСЃС‚РёСЂРѕРІР°РЅРёРµ.
 */
 
 
 // http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&adress={addressObject}&description={lorem|32}
 
-// частично по гайду: https://developer.mozilla.org/ru/docs/Learn/JavaScript/%D0%9E%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D1%8B/JSON
+// С‡Р°СЃС‚РёС‡РЅРѕ РїРѕ РіР°Р№РґСѓ: https://developer.mozilla.org/ru/docs/Learn/JavaScript/%D0%9E%D0%B1%D1%8A%D0%B5%D0%BA%D1%82%D1%8B/JSON
 
 
-// Этап 1. Получение данных "от сервера"
+// Р­С‚Р°Рї 1. РџРѕР»СѓС‡РµРЅРёРµ РґР°РЅРЅС‹С… "РѕС‚ СЃРµСЂРІРµСЂР°"
 
 let requestURL = "http://www.filltext.com/?rows=32&id={number|1000}&firstName={firstName}&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&adress={addressObject}&description={lorem|32}";
 //let requestURL = "http://www.filltext.com/?rows=1000&id={number|1000}&firstName={firstName}&delay=3&lastName={lastName}&email={email}&phone={phone|(xxx)xxx-xx-xx}&adress={addressObject}&description={lorem|32}";
-let requestJSON = new XMLHttpRequest();	// новый экземпляр объекта запроса из конструктора XMLHttpRequest
+let requestJSON = new XMLHttpRequest();	// РЅРѕРІС‹Р№ СЌРєР·РµРјРїР»СЏСЂ РѕР±СЉРµРєС‚Р° Р·Р°РїСЂРѕСЃР° РёР· РєРѕРЅСЃС‚СЂСѓРєС‚РѕСЂР° XMLHttpRequest
 requestJSON.open('GET', requestURL);
-requestJSON.responseType = 'json'; //устанавливаем responseType в JSON, так что XHR знает, что сервер будет возвращать JSON и, что это должно быть преобразовано за кулисами в объект JavaScript
-requestJSON.send();	// Запрос
+requestJSON.responseType = 'json'; //СѓСЃС‚Р°РЅР°РІР»РёРІР°РµРј responseType РІ JSON, С‚Р°Рє С‡С‚Рѕ XHR Р·РЅР°РµС‚, С‡С‚Рѕ СЃРµСЂРІРµСЂ Р±СѓРґРµС‚ РІРѕР·РІСЂР°С‰Р°С‚СЊ JSON Рё, С‡С‚Рѕ СЌС‚Рѕ РґРѕР»Р¶РЅРѕ Р±С‹С‚СЊ РїСЂРµРѕР±СЂР°Р·РѕРІР°РЅРѕ Р·Р° РєСѓР»РёСЃР°РјРё РІ РѕР±СЉРµРєС‚ JavaScript
+requestJSON.send();	// Р—Р°РїСЂРѕСЃ
 let myTable = document.querySelector("#myDataTable");
 let tableBody;
 let userData = [];
-let tableFields = [`id`, `firstName`, `lastName`, `email`, `phone`]; // используемые поля
-let numOfUsers = 0; // количество записей
+let tableFields = [`id`, `firstName`, `lastName`, `email`, `phone`]; // РёСЃРїРѕР»СЊР·СѓРµРјС‹Рµ РїРѕР»СЏ
+let numOfUsers = 0; // РєРѕР»РёС‡РµСЃС‚РІРѕ Р·Р°РїРёСЃРµР№
+let allTdElements;
 
 
 
-requestJSON.onload = function() {	// при упешном выполнении запроса и загрузке ответа выполняется функция
+requestJSON.onload = function() {	// РїСЂРё СѓРїРµС€РЅРѕРј РІС‹РїРѕР»РЅРµРЅРёРё Р·Р°РїСЂРѕСЃР° Рё Р·Р°РіСЂСѓР·РєРµ РѕС‚РІРµС‚Р° РІС‹РїРѕР»РЅСЏРµС‚СЃСЏ С„СѓРЅРєС†РёСЏ
 	userData = requestJSON.response;
 	//console.log(`___________________user data is:`);
-	//console.log(userData);
+	console.log(userData);
 	numOfUsers = userData.length;
 	//console.log(numOfPages);
 
-	// Этап 2. Создание и заполнение таблицы с данными.	
-	// шапка таблицы для сортировки
+	// Р­С‚Р°Рї 2. РЎРѕР·РґР°РЅРёРµ Рё Р·Р°РїРѕР»РЅРµРЅРёРµ С‚Р°Р±Р»РёС†С‹ СЃ РґР°РЅРЅС‹РјРё.	
+	// С€Р°РїРєР° С‚Р°Р±Р»РёС†С‹ РґР»СЏ СЃРѕСЂС‚РёСЂРѕРІРєРё
 	let tRow = document.createElement('tr');
 	for (let j = 0; j < tableFields.length; j++) {
 		let th = document.createElement('th');
 		th.innerHTML = tableFields[j];
-		th.setAttribute(`onclick`, `sortTableCol(${j})`); // при клике будет запускаться функция сортировки
+		th.setAttribute(`onclick`, `sortTableCol(${j})`); // РїСЂРё РєР»РёРєРµ Р±СѓРґРµС‚ Р·Р°РїСѓСЃРєР°С‚СЊСЃСЏ С„СѓРЅРєС†РёСЏ СЃРѕСЂС‚РёСЂРѕРІРєРё
 		tRow.appendChild(th);
 	}
 	myTable.appendChild(tRow);
 
 	tableBody = document.createElement('tbody');
 	myTable.appendChild(tableBody);
+	
 	tableFiller(userData, tableBody);
 	makePagination();
 }
 
 function tableFiller(tableData, tableRows){	
 	tableRows.innerHTML = "";
-	//добавление полей в строку
+	//РґРѕР±Р°РІР»РµРЅРёРµ РїРѕР»РµР№ РІ СЃС‚СЂРѕРєСѓ
 	// id ? | firstName ?| lastName      ? | email          ?| phone 
 	for (let i = 0; i < tableData.length; i++) {
 		let tRow = document.createElement('tr');
 		for (let j = 0; j < tableFields.length; j++) {
 			let tCell = document.createElement('td');
 			tCell.innerHTML = tableData[i][tableFields[j]];
+			tCell.setAttribute(`onclick`, `tdClick(${tableData[i].id})`);
 			tRow.appendChild(tCell);
 		}
-		tRow.setAttribute(`id`, tableData[i][`id`]);
+		tRow.setAttribute(`id`, tableData[i][`id`]);	// РґРѕР±Р°РІР»СЏРµРј id СЃ РЅРѕРјРµСЂРѕРј РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ
+		tRow.setAttribute(`class`, `tableRow`);	// РґРѕР±Р°РІР»СЏРµРј РѕР±РѕР·РЅР°С‡РµРЅРёРµ
+		tRow.style.display = "none";	// РїСЂСЏС‡РµРј СЃС‚СЂРѕС‡РєСѓ
 		tableRows.appendChild(tRow);
 	}
 	//table.appendChild(tableBody);
 }
 
-// сортировка таблицы
-let tableFieldsSort = [`no`,`no`,`no`,`no`,`no`]; // варианты сортировки. `no` - не сортировано, asc - восх, desc - нисх
+// СЃРѕСЂС‚РёСЂРѕРІРєР° С‚Р°Р±Р»РёС†С‹
+let tableFieldsSort = [`no`,`no`,`no`,`no`,`no`]; // РІР°СЂРёР°РЅС‚С‹ СЃРѕСЂС‚РёСЂРѕРІРєРё. `no` - РЅРµ СЃРѕСЂС‚РёСЂРѕРІР°РЅРѕ, asc - РІРѕСЃС…, desc - РЅРёСЃС…
 function sortTableCol(x){
 	let thFields = document.getElementsByTagName('th');
-	if (tableFieldsSort[x] == `no` || tableFieldsSort[x] == `desc`) {	// определение направления сортировки
-		tableFieldsSort[x] = `asc`; // сортировано по возрастанию
+	if (tableFieldsSort[x] == `no` || tableFieldsSort[x] == `desc`) {	// РѕРїСЂРµРґРµР»РµРЅРёРµ РЅР°РїСЂР°РІР»РµРЅРёСЏ СЃРѕСЂС‚РёСЂРѕРІРєРё
+		tableFieldsSort[x] = `asc`; // СЃРѕСЂС‚РёСЂРѕРІР°РЅРѕ РїРѕ РІРѕР·СЂР°СЃС‚Р°РЅРёСЋ
 		thFields[x].innerHTML = `${tableFields[x]} v`;
-		// встроенная сортировка с сравнением соседних строк по заданным полям
+		// РІСЃС‚СЂРѕРµРЅРЅР°СЏ СЃРѕСЂС‚РёСЂРѕРІРєР° СЃ СЃСЂР°РІРЅРµРЅРёРµРј СЃРѕСЃРµРґРЅРёС… СЃС‚СЂРѕРє РїРѕ Р·Р°РґР°РЅРЅС‹Рј РїРѕР»СЏРј
 		userData.sort(function (a, b) {	
 			if (a[tableFields[x]] > b[tableFields[x]]) {return 1;}
 			if (a[tableFields[x]] < b[tableFields[x]]) {return -1;}
@@ -150,7 +155,7 @@ function sortTableCol(x){
 		});
 	}else{
 		thFields[x].innerHTML = `${tableFields[x]} ^`;
-		tableFieldsSort[x] = `desc`; // сортировано по убыванию
+		tableFieldsSort[x] = `desc`; // СЃРѕСЂС‚РёСЂРѕРІР°РЅРѕ РїРѕ СѓР±С‹РІР°РЅРёСЋ
 		userData.sort(function (a, b) {	
 			if (a[tableFields[x]] < b[tableFields[x]]) {return 1;}
 			if (a[tableFields[x]] > b[tableFields[x]]) {return -1;}
@@ -159,17 +164,116 @@ function sortTableCol(x){
 	}
 	console.log(`sorted by ${tableFields[x]} (${tableFieldsSort[x]})`);
 	tableFiller(userData, tableBody);
+	makePagination();
 }
 
-// пагинация на странице
+// РїР°РіРёРЅР°С†РёСЏ РЅР° СЃС‚СЂР°РЅРёС†Рµ
+// https://ru.stackoverflow.com/questions/555303/%D0%9A%D0%B0%D0%BA-%D1%80%D0%B5%D0%B0%D0%BB%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D1%82%D1%8C-%D0%BF%D0%BE%D0%B4%D0%BE%D0%B1%D0%BD%D1%8B%D0%B9-pagination-js
+let activePage;
+let rowsToShow;
+let rowPerPage;
 function makePagination(){
-	let rowPerPage = 50; // строк на странице
-	let numOfPages = Math.ceil(numOfUsers / rowPerPage); // количество страниц с данными
+	// РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ РїРµСЂРµС…РѕРґРѕРІ РЅР° СЃС‚СЂР°РЅРёС†Рµ
+	rowPerPage = 10; // СЃС‚СЂРѕРє РЅР° СЃС‚СЂР°РЅРёС†Рµ
+	let numOfPages = Math.ceil(numOfUsers / rowPerPage); // РєРѕР»РёС‡РµСЃС‚РІРѕ СЃС‚СЂР°РЅРёС† СЃ РґР°РЅРЅС‹РјРё
 	let paginator = document.querySelector("#pagination");
 	let page = "";
 	for (let i = 0; i < numOfPages; i++) {
-		page += `hello there`;
-	  //page += "<span data-page=" + i * cnt + "  id=\"page" + (i + 1) + "\">" + (i + 1) + "</span>";
+		page += `<span data-page=${i*rowPerPage} id="page${(i + 1)}"> ${(i + 1)} </span>`;
 	}
 	paginator.innerHTML = page;
+
+	// 
+	rowsToShow = document.querySelectorAll(".tableRow");
+	//console.log(rowsToShow.length);
+	for (var i = 0; i < rowsToShow.length; i++) {
+		if (i < rowPerPage) {	// РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ РїРµСЂРІРѕР№ "СЃС‚СЂР°РЅРёС†С‹" СЃ Р·Р°РїРёСЃСЏРјРё
+			rowsToShow[i].style.display = "table-row";
+		}
+	}
+	// РѕС‚РјРµС‡Р°РµРј Р°РєС‚РёРІРЅСѓСЋ СЃС‚СЂР°РЅРёС†Сѓ
+	activePage = document.getElementById("page1");
+	activePage.classList.add("paginator_active");
+}
+// РїРµСЂРµС…РѕРґС‹ РІРЅСѓС‚СЂРё СЃС‚СЂР°РЅРёС†	  
+function pagination(event) {
+	let e = event || window.event;	// РґРµР№СЃС‚РІРёРµ
+	let target = e.target;	// С†РµР»СЊ РґРµР№СЃРІС‚РёСЏ
+	let id = target.id;	// id С†РµР»Рё РґРµР№СЃС‚РІРёСЏ
+	//console.log(target);	
+	//console.log(target.dataset);	
+	//console.log(target.dataset.page);	
+	
+	if (target.tagName.toLowerCase() != "span") return; // РµСЃР»Рё РґРµР№СЃС‚РІРёРµ РїСЂРёРјРµРЅРµРЅРѕ РЅРµ Рє Р±Р»РѕРєСѓ РїРµСЂРµС…РѕРґРѕРІ
+	
+	//let num_ = id.substr(4); // id СЃ 4(5) СЃРёРјРІРѕР»Р°
+	let pageRowStart = +target.dataset.page;	// c РєР°РєРѕРіРѕ РЅРѕРјРµСЂР° РЅР°С‡РёРЅР°РµС‚СЃСЏ РѕС‚РѕР±СЂР°Р¶РµРЅРёРµ СЌР»РµРјРµРЅС‚РѕРІ
+	activePage.classList.remove("paginator_active");
+	activePage = document.getElementById(id);
+	activePage.classList.add("paginator_active");
+
+	let j = 0;
+	for (let i = 0; i < rowsToShow.length; i++) {	// РїРѕ РєРѕР»РёС‡РµСЃС‚РІСѓ РІС‹РІРѕРґРёРјС‹С… СЃС‚СЂРѕРє
+	  let data_num = rowsToShow[i].dataset.tableRow;	
+	  rowsToShow[i].style.display = "none";
+	}
+	for (let i = pageRowStart; i < rowsToShow.length; i++) {
+	  if (j >= rowPerPage) break;
+	  rowsToShow[i].style.display = "table-row";
+	  j++;
+	}
+}
+
+let infoBlock = document.querySelector('.infoBlock');
+function tdClick(x){
+	//console.log(`yeah ${x}`)
+	//console.log(userData)
+	let targetUser = userData.find(user => user.id == x);
+	infoBlock.innerHTML = `<div id="infoBlockPart">Р’С‹Р±СЂР°РЅ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ <b>${targetUser.firstName} ${targetUser.lastName}</b></div>`;
+	infoBlock.innerHTML += `<div id="infoBlockPart">РћРїРёСЃР°РЅРёРµ:<br><textarea>${targetUser.description}</textarea></div>`;
+	infoBlock.innerHTML +=`<div id="infoBlockPart">РђРґСЂРµСЃ РїСЂРѕР¶РёРІР°РЅРёСЏ: <b>${targetUser.adress.state}, ${targetUser.adress.city}, ${targetUser.adress.streetAddress}, ${targetUser.adress.zip}</b></div>`;
+	infoBlock.innerHTML +=`<div id="infoBlockPart">Р“РѕСЂРѕРґ: <b>${targetUser.adress.city}</b> </div>`;
+	infoBlock.innerHTML +=`<div id="infoBlockPart">РџСЂРѕРІРёРЅС†РёСЏ/С€С‚Р°С‚: <b>${targetUser.adress.state}</b></div>`;
+	infoBlock.innerHTML +=`<div id="infoBlockPart">РРЅРґРµРєСЃ: <b>${targetUser.adress.zip}</b></div>`;
+}	
+
+// 3. Р¤РёР»СЊС‚СЂР°С†РёСЏ: РєРѕРјРїРѕРЅРµРЅС‚ РїСЂРµРґРѕСЃС‚Р°РІР»СЏРµС‚ С‚РµРєСЃС‚РѕРІРѕРµ РїРѕР»Рµ, РІ РєРѕС‚РѕСЂРѕРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЊ РјРѕР¶РµС‚ РІРІРµСЃС‚Рё С‚РµРєСЃС‚ Рё СЃС‚СЂРѕРєРё С‚Р°Р±Р»РёС†С‹, РґР°РЅРЅС‹Рµ РєРѕС‚РѕСЂС‹С… РЅРµ СЃРѕРґРµСЂР¶Р°С‚ РїРѕРґСЃС‚СЂРѕРєСѓ, РІРІРµРґС‘РЅРЅСѓСЋ РїРѕР»СЊР·РѕРІР°С‚РµР»РµРј, СЃРєСЂС‹РІР°СЋС‚СЃСЏ. РџРµСЂРµС„РёР»СЊС‚СЂР°С†РёСЏ РѕСЃСѓС‰РµСЃС‚РІР»СЏРµС‚СЃСЏ РїРѕ РЅР°Р¶Р°С‚РёСЋ РЅР° РєРЅРѕРїРєСѓ РќР°Р№С‚Рё.
+let filtration = document.querySelector('#inputFind');
+let btnFind = document.querySelector('#btnFind');
+btnFind.onclick = function(){
+	console.log(filtration.value);
+	//let targetUser = userData.find(user => user.includes(filtration.value));
+	//console.log(targetUser);
+	for (let i = 0; i < userData.length; i++) {
+		console.log(userData[i]);
+		for (key in userData[i]) {
+			//console.log(key)
+			//console.log(userData[i][key])
+			let toStringer = userData[i][key].stringify();
+			console.log(toStringer);
+			//console.log(toString(userData[i][key]))
+			//.find(filtration.value))
+			//let gogog = userData[i][key].find(filtration.value);
+			//console.log(gogog);
+
+			//find(user => user.includes(filtration.value))
+			//console.log(key)
+
+		}
+	}
+
+	/*
+	
+		let j = 0;
+	for (let i = 0; i < rowsToShow.length; i++) {	// РїРѕ РєРѕР»РёС‡РµСЃС‚РІСѓ РІС‹РІРѕРґРёРјС‹С… СЃС‚СЂРѕРє
+	  let data_num = rowsToShow[i].dataset.tableRow;	
+	  rowsToShow[i].style.display = "none";
+	}
+	for (let i = pageRowStart; i < rowsToShow.length; i++) {
+	  if (j >= rowPerPage) break;
+	  rowsToShow[i].style.display = "table-row";
+	  j++;
+	}
+
+	*/
 }
